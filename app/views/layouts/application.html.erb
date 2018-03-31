@@ -4,11 +4,68 @@
     <title>Facemash</title>
     <%= csrf_meta_tags %>
 
+    <%= stylesheet_link_tag    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <style>
+    ul{
+	    list-style-type: none;
+	    margin: 0px;
+	    padding: 0px;  
+	    overflow: hidden;
+	    background-color: #333; 
+    }
+    .link{
+    	float: left;
+    	display: block; 
+    	color: white;
+    	height: 50px;
+    	width: 150px;
+    	text-align: center;
+    	vertical-align: middle;
+    	border: none;
+    	background-color: #333; 
+    }
+    .link:hover{
+    	animation: hvr;
+    	animation-duration: 0.5s;
+    	color: white;
+    	text-decoration: none;
+    	animation-fill-mode: forwards;
+    }
+    @keyframes hvr{
+    	from{background-color: #333; color: white;}
+    	to{background-color: #666; color: black;}
+    }
+    #sgnout{
+    	float:right;
+    }
+	</style>
   </head>
 
   <body>
+  	<div>
+  		<ul>
+	  		<li><%= button_to 'Ratings', ratings_path, {:class=>'link', :method => :get} %></li>
+
+	  		<li><%= button_to 'Mash', mash_path, {:class=>'link', :method => :get} %></li>
+			<% if signed_in? %>
+			<li>
+					<%= button_to 'Sign out', sign_out_path, :class=>'link', :id=>'sgnout' , method: :delete %>
+			</li>
+				<% else %>
+				<% end %>
+			</ul>
+
+	</div>
+	<br>
+
+    <div id="flash">
+      <% flash.each do |key, value| %>
+        <div class="flash <%= key %>"><%= value %></div>
+      <% end %>
+    </div>
+
+
     <%= yield %>
   </body>
 </html>
